@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بن البراوي | El Brawy Coffee</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=El+Messiri:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--purple:#6B2D8B;--purple-dark:#4A1D61;--purple-light:#9B4DBB;--gold:#C9A84C;--gold-light:#E8C97A;--dark:#1A0A2E;--dark2:#2A1240;--white:#FFFFFF;--muted:rgba(255,255,255,0.6)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Tajawal',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden}
+
+/* LANG */
+.lang-switcher{position:fixed;top:80px;left:30px;z-index:2000;display:flex;background:rgba(26,10,46,0.75);border:1px solid rgba(201,168,76,0.35);border-radius:30px;padding:4px;backdrop-filter:blur(16px)}
+.lang-btn{padding:7px 18px;border-radius:24px;border:none;background:transparent;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer;transition:all .3s;font-family:inherit;letter-spacing:1px}
+.lang-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+nav.scrolled{background:rgba(26,10,46,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.15);padding:12px 40px}
+.nav-logo{width:65px;height:65px;border-radius:50%;object-fit:cover;transition:all .4s}
+nav.scrolled .nav-logo{width:50px;height:50px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--white);text-decoration:none;font-size:15px;font-weight:500;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;right:0;width:0;height:2px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--gold-light)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark)!important;padding:9px 22px;border-radius:30px;font-weight:700}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,168,76,0.4)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{width:25px;height:2px;background:var(--white);border-radius:2px}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease}
+.hero-slide.active{opacity:1}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(26,10,46,.25),rgba(26,10,46,.5) 50%,rgba(26,10,46,.88) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;animation:fadeUp 1s ease .3s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.hero-logo-img{width:155px;height:155px;border-radius:50%;margin:0 auto 24px;display:block;border:2px solid rgba(201,168,76,.45);animation:logoPulse 3s ease infinite}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 40px rgba(107,45,139,.5)}50%{box-shadow:0 0 80px rgba(107,45,139,.8),0 0 40px rgba(201,168,76,.3)}}
+.hero-tagline{font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;font-weight:500}
+.hero-title{font-family:'El Messiri',serif;font-size:clamp(50px,9vw,100px);font-weight:700;line-height:1.1;margin-bottom:18px}
+.hero-subtitle{font-size:17px;color:var(--muted);max-width:520px;margin:0 auto 38px;line-height:1.9}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);padding:15px 40px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:all .3s;display:inline-block;font-family:inherit}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(201,168,76,.4)}
+.btn-outline{border:1.5px solid rgba(255,255,255,.35);color:var(--white);padding:13px 36px;border-radius:50px;font-size:16px;font-weight:500;text-decoration:none;transition:all .3s;display:inline-block;backdrop-filter:blur(10px)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px)}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--muted);font-size:12px;animation:scrollBounce 2s ease infinite}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.scroll-dot{width:26px;height:42px;border:1.5px solid rgba(255,255,255,.25);border-radius:13px;position:relative}
+.scroll-dot::after{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);width:4px;height:9px;background:var(--gold);border-radius:2px;animation:scrollAnim 2s ease infinite}
+@keyframes scrollAnim{0%{opacity:1;top:6px}100%{opacity:0;top:22px}}
+
+/* SECTIONS */
+section{padding:100px 0}
+.container{max-width:1180px;margin:0 auto;padding:0 40px}
+.section-label{font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:600}
+.section-title{font-family:'El Messiri',serif;font-size:clamp(30px,5vw,54px);font-weight:700;line-height:1.2;margin-bottom:18px}
+.section-desc{font-size:16px;color:var(--muted);line-height:1.95;max-width:580px}
+
+/* STATS */
+.stats-section{background:linear-gradient(135deg,var(--purple-dark),var(--dark2));padding:75px 0;border-top:1px solid rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.08)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+.stat-num{font-family:'El Messiri',serif;font-size:50px;font-weight:700;background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px}
+.stat-label{font-size:14px;color:var(--muted);font-weight:500}
+
+/* ABOUT */
+.about{background:var(--dark2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-images{position:relative;height:480px}
+.about-img-main{width:73%;height:360px;object-fit:cover;border-radius:16px;position:absolute;top:0;right:0;box-shadow:-20px 20px 60px rgba(0,0,0,.5)}
+.about-img-secondary{width:53%;height:250px;object-fit:cover;border-radius:16px;position:absolute;bottom:0;left:0;box-shadow:20px -20px 60px rgba(0,0,0,.4);border:4px solid var(--dark2)}
+.about-badge{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(135deg,var(--purple),var(--purple-dark));border:1.5px solid rgba(201,168,76,.25);border-radius:14px;padding:18px 22px;text-align:center;z-index:3;box-shadow:0 20px 50px rgba(107,45,139,.5)}
+.about-badge-num{font-family:'El Messiri',serif;font-size:38px;font-weight:700;color:var(--gold)}
+.about-badge-text{font-size:12px;color:var(--muted)}
+.about-features{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px}
+.about-feature{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px;transition:all .3s}
+.about-feature:hover{background:rgba(107,45,139,.15);border-color:rgba(201,168,76,.25);transform:translateY(-3px)}
+.about-feature-icon{font-size:26px;margin-bottom:8px}
+.about-feature-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.about-feature-text{font-size:12px;color:var(--muted)}
+
+/* MENU */
+.menu-section{background:var(--dark)}
+.menu-header{text-align:center;margin-bottom:55px}
+.menu-header .section-desc{margin:0 auto}
+.menu-tabs{display:flex;justify-content:center;gap:10px;margin-bottom:45px;flex-wrap:wrap}
+.menu-tab{padding:9px 26px;border-radius:30px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-family:'Tajawal',sans-serif;font-size:14px;cursor:pointer;transition:all .3s}
+.menu-tab.active,.menu-tab:hover{background:linear-gradient(135deg,var(--purple),var(--purple-dark));border-color:var(--purple);color:var(--white);box-shadow:0 8px 25px rgba(107,45,139,.35)}
+.menu-grid{display:none;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:20px}
+.menu-grid.active{display:grid}
+.menu-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:26px;transition:all .3s;position:relative;overflow:hidden}
+.menu-card::before{content:'';position:absolute;top:0;right:0;width:55%;height:2px;background:linear-gradient(to left,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.menu-card:hover{background:rgba(107,45,139,.12);border-color:rgba(201,168,76,.2);transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.menu-card:hover::before{opacity:1}
+.menu-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.menu-item-name{font-family:'El Messiri',serif;font-size:19px;font-weight:600;line-height:1.3}
+.menu-item-price{background:linear-gradient(135deg,var(--gold),var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:17px;font-weight:700;white-space:nowrap;margin-right:10px}
+.menu-item-desc{font-size:13px;color:var(--muted);line-height:1.7}
+.menu-item-weight{font-size:12px;color:var(--gold);margin-bottom:6px;font-weight:500}
+
+/* MENU IMG */
+.menu-img-section{background:var(--dark2);text-align:center;padding:80px 0}
+.menu-full-img{max-width:660px;width:90%;border-radius:20px;box-shadow:0 40px 100px rgba(107,45,139,.5);border:2px solid rgba(201,168,76,.15);margin:0 auto;display:block}
+
+/* GALLERY */
+.gallery-section{background:var(--dark2)}
+.gallery-header{text-align:center;margin-bottom:50px}
+.gallery-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.gallery-item{overflow:hidden;border-radius:12px;cursor:pointer;position:relative}
+.gallery-item:nth-child(1){grid-column:1/6;grid-row:1/3}
+.gallery-item:nth-child(2){grid-column:6/9;grid-row:1}
+.gallery-item:nth-child(3){grid-column:9/13;grid-row:1}
+.gallery-item:nth-child(4){grid-column:6/10;grid-row:2}
+.gallery-item:nth-child(5){grid-column:10/13;grid-row:2}
+.gallery-item:nth-child(6){grid-column:1/5;grid-row:3}
+.gallery-item:nth-child(7){grid-column:5/9;grid-row:3}
+.gallery-item:nth-child(8){grid-column:9/13;grid-row:3}
+.gallery-item img{width:100%;height:100%;min-height:200px;object-fit:cover;transition:transform .6s}
+.gallery-item:hover img{transform:scale(1.08)}
+.gallery-item::after{content:'';position:absolute;inset:0;background:rgba(107,45,139,.3);opacity:0;transition:opacity .3s}
+.gallery-item:hover::after{opacity:1}
+
+/* CONTACT */
+.contact-section{background:var(--dark)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:start}
+.contact-info-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:38px}
+.contact-item{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.06)}
+.contact-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.contact-icon{width:46px;height:46px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.contact-label{font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.contact-value{font-size:15px;font-weight:500;line-height:1.6}
+.contact-value a{color:inherit;text-decoration:none;transition:color .3s}
+.contact-value a:hover{color:var(--gold-light)}
+.social-links{display:flex;gap:12px;margin-top:36px}
+.social-link{width:48px;height:48px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:20px;text-decoration:none;transition:all .3s;color:var(--white)}
+.social-link:hover{background:linear-gradient(135deg,var(--purple),var(--purple-dark));border-color:var(--purple);transform:translateY(-3px);box-shadow:0 10px 30px rgba(107,45,139,.4)}
+.map-container{border-radius:20px;overflow:hidden;height:390px;border:1px solid rgba(255,255,255,.07)}
+.map-container iframe{width:100%;height:100%;border:none;filter:invert(.9) hue-rotate(180deg)}
+
+/* COMMUNICATION MODAL */
+.comm-modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(8px)}
+.comm-modal.active{display:flex}
+.comm-modal-content{background:var(--dark2);border:1.5px solid rgba(201,168,76,.25);border-radius:24px;padding:50px;max-width:500px;width:90%;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.comm-modal-close{position:absolute;top:20px;left:20px;background:rgba(255,255,255,.1);border:none;color:var(--white);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:24px;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.comm-modal-close:hover{background:rgba(201,168,76,.3);transform:rotate(90deg)}
+.comm-modal-title{font-family:'El Messiri',serif;font-size:28px;font-weight:700;margin-bottom:30px;text-align:center}
+.comm-links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.comm-link-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:16px;padding:24px;text-align:center;text-decoration:none;transition:all .3s;cursor:pointer;color:var(--white)}
+.comm-link-card:hover{background:rgba(107,45,139,.2);border-color:rgba(201,168,76,.4);transform:translateY(-5px);box-shadow:0 15px 40px rgba(107,45,139,.3)}
+.comm-link-icon{font-size:48px;margin-bottom:12px;display:block;width:60px;height:60px}
+svg.comm-link-icon{width:60px;height:60px;margin:0 auto 12px}
+.comm-link-name{font-size:14px;font-weight:600}
+
+/* FOOTER */
+footer{background:var(--dark2);border-top:1px solid rgba(255,255,255,.05);padding:50px 0 28px;text-align:center}
+.footer-logo{width:78px;height:78px;border-radius:50%;object-fit:cover;margin:0 auto 18px;display:block}
+.footer-name{font-family:'El Messiri',serif;font-size:26px;font-weight:700;margin-bottom:6px}
+.footer-tagline{font-size:13px;color:var(--muted);margin-bottom:28px}
+.footer-divider{height:1px;background:rgba(255,255,255,.06);margin:28px 0}
+.footer-bottom{font-size:13px;color:rgba(255,255,255,.28)}
+
+/* WHATSAPP */
+.whatsapp-float{position:fixed;bottom:28px;left:28px;width:58px;height:58px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;z-index:999;box-shadow:0 8px 30px rgba(37,211,102,.4);transition:all .3s;animation:waPulse 3s ease infinite}
+.whatsapp-float:hover{transform:scale(1.15)}
+@keyframes waPulse{0%,100%{box-shadow:0 8px 30px rgba(37,211,102,.4)}50%{box-shadow:0 8px 50px rgba(37,211,102,.7)}}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* BILINGUAL */
+body.en{font-family:'Jost',sans-serif;direction:ltr;text-align:left}
+body.en .section-title,body.en .hero-title,body.en .menu-item-name,body.en .footer-name{font-family:'Cormorant Garamond',serif}
+body.en .nav-links a::after{right:auto;left:0}
+body.en .menu-item-price{margin-right:0;margin-left:10px}
+body.en .lang-switcher{left:auto;right:30px}
+body.en .menu-card-header{flex-direction:row-reverse}
+/* show/hide */
+[data-en]{display:none}[data-ar]{display:block}
+span[data-en],span[data-ar],a[data-en],a[data-ar]{display:inline}
+span[data-en],a[data-en]{display:none}
+body.en [data-en]{display:block}body.en [data-ar]{display:none}
+body.en span[data-en],body.en a[data-en]{display:inline}
+body.en span[data-ar],body.en a[data-ar]{display:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links{display:none}.hamburger{display:flex}
+  .about-grid,.contact-grid{grid-template-columns:1fr;gap:40px}
+  .about-images{height:290px}.stats-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto}
+  .gallery-item:nth-child(n){grid-column:auto;grid-row:auto}
+  .gallery-item img{min-height:150px}.container{padding:0 20px}
+  section{padding:65px 0}nav{padding:14px 20px}.menu-grid{grid-template-columns:1fr}
+  .lang-switcher{top:75px;left:16px}body.en .lang-switcher{left:auto;right:16px}
+}
+</style>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4A1D61">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="بن البراوي">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="lang-switcher"><button class="lang-btn active" onclick="setLang('ar')">عربي</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+<nav id="navbar">
+<img src="img/7cce533f7e.webp" class="nav-logo" alt="El Brawy">
+<ul class="nav-links">
+<li><a href="#about"><span data-ar>من نحن</span><span data-en>About</span></a></li>
+<li><a href="#menu"><span data-ar>المنيو</span><span data-en>Menu</span></a></li>
+<li><a href="#gallery"><span data-ar>معرض الصور</span><span data-en>Gallery</span></a></li>
+<li><a href="#contact"><span data-ar>تواصل معنا</span><span data-en>Contact</span></a></li>
+<li><a href="https://wa.me/201002411155" class="nav-cta" target="_blank"><span data-ar>اطلب الآن</span><span data-en>Order Now</span></a></li>
+</ul>
+<div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<section class="hero">
+<div class="hero-slide active" style="background-image:url('img/6c7bfac0a1.webp')"></div>
+<div class="hero-slide" style="background-image:url('img/40cb3f8919.webp')"></div>
+<div class="hero-slide" style="background-image:url('img/af2b465024.webp')"></div>
+<div class="hero-slide" style="background-image:url('img/ba64ff90d5.webp')"></div>
+<div class="hero-content">
+<img src="img/7cce533f7e.webp" class="hero-logo-img" alt="El Brawy">
+<p class="hero-tagline"><span data-ar>قهوة متخصصة راقية</span><span data-en>Specialty Coffee Experience</span></p>
+<h1 class="hero-title"><span data-ar>بن البراوي</span><span data-en>El Brawy Coffee</span></h1>
+<p class="hero-subtitle"><span data-ar>تجربة قهوة فريدة من نوعها، حيث يلتقي الأصالة بالجودة في كل قطرة</span><span data-en>A unique coffee experience where tradition meets quality in every drop</span></p>
+<div class="hero-actions"><a href="#menu" class="btn-primary"><span data-ar>استكشف المنيو</span><span data-en>Explore Menu</span></a><a href="https://wa.me/201002411155" class="btn-outline" target="_blank"><span data-ar>📱 تواصل معنا</span><span data-en>📱 Contact Us</span></a></div>
+</div><div class="hero-scroll"><div class="scroll-dot"></div></div></section>
+<section class="stats-section"><div class="container"><div class="stats-grid">
+<div class="reveal"><div class="stat-num">20+</div><div class="stat-label"><span data-ar>نوع قهوة مختلف</span><span data-en>Coffee Varieties</span></div></div>
+<div class="reveal"><div class="stat-num">100%</div><div class="stat-label"><span data-ar>حبوب طبيعية</span><span data-en>Natural Beans</span></div></div>
+<div class="reveal"><div class="stat-num">100%</div><div class="stat-label"><span data-ar>رضا العملاء</span><span data-en>Satisfaction</span></div></div>
+<div class="reveal"><div class="stat-num"><span data-ar>يومياً</span><span data-en>Daily</span></div><div class="stat-label"><span data-ar>طازج كل يوم</span><span data-en>Freshly Roasted</span></div></div>
+</div></div></section>
+<section class="about" id="about"><div class="container"><div class="about-grid">
+<div class="about-images reveal">
+<img src="img/af2b465024.webp" loading="lazy" class="about-img-main" alt="Interior">
+<img src="img/aadc854c3f.webp" class="about-img-secondary" alt="Beans">
+<div class="about-badge"><div class="about-badge-num">☕</div><div class="about-badge-text"><span data-ar>قهوة متخصصة</span><span data-en>Specialty Coffee</span></div></div>
+</div>
+<div class="reveal">
+<p class="section-label"><span data-ar>قصتنا</span><span data-en>Our Story</span></p>
+<h2 class="section-title"><span data-ar>الأصالة في كل كوب</span><span data-en>Authenticity in Every Cup</span></h2>
+<p class="section-desc"><span data-ar>بن البراوي ليس مجرد مكان لشرب القهوة، بل هو وجهة لمحبي القهوة الحقيقيين. نختار أجود حبوب البن من أفضل المزارع العالمية ونحمّصها بعناية لنقدم تجربة لا تُنسى.</span><span data-en>El Brawy is not just a coffee shop — it's a destination for true coffee lovers. We source the finest beans from the world's best farms and roast them with care to deliver an unforgettable experience.</span></p>
+<div class="about-features">
+<div class="about-feature reveal"><div class="about-feature-icon">🫘</div><div class="about-feature-title"><span data-ar>حبوب مختارة</span><span data-en>Curated Beans</span></div><div class="about-feature-text"><span data-ar>أجود أنواع البن من المصدر</span><span data-en>Finest beans, direct source</span></div></div>
+<div class="about-feature reveal"><div class="about-feature-icon">🔥</div><div class="about-feature-title"><span data-ar>تحميص طازج</span><span data-en>Fresh Roasting</span></div><div class="about-feature-text"><span data-ar>نحمّص يومياً للحفاظ على الطعم</span><span data-en>Roasted daily for peak flavor</span></div></div>
+<div class="about-feature reveal"><div class="about-feature-icon">🎨</div><div class="about-feature-title"><span data-ar>لاتيه آرت</span><span data-en>Latte Art</span></div><div class="about-feature-text"><span data-ar>رسومات فنية على كل كوب</span><span data-en>Artistic designs on every cup</span></div></div>
+<div class="about-feature reveal"><div class="about-feature-icon">✨</div><div class="about-feature-title"><span data-ar>جودة مضمونة</span><span data-en>Guaranteed Quality</span></div><div class="about-feature-text"><span data-ar>معايير عالية في كل ما نقدمه</span><span data-en>High standards in everything</span></div></div>
+</div></div></div></div></section>
+<section class="menu-section" id="menu"><div class="container">
+  <!-- ============================================================
+  بن البراوي — Menu Section + Cart
+  عشان تضيفه:
+  1. استبدل الـ <section class="menu-section" ... </section> كلها بالكود ده
+  2. حط الـ <style> في آخر الـ <style> الموجود في موقعك
+  3. حط الـ <script> قبل </script> الموجود في موقعك
+  ============================================================ -->
+
+<!-- ===== STYLES — حطها في آخر بلوك الـ CSS بتاعك ===== -->
+<style id="cart-styles">
+/* Cart Button */
+.cart-fab{position:fixed;bottom:24px;right:24px;z-index:9999;background:linear-gradient(135deg,#7b3fa0,#9b5fc0);border:none;border-radius:50px;padding:12px 20px;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 4px 20px rgba(123,63,160,.5);transition:transform .2s,box-shadow .2s;font-family:'Cairo',sans-serif}
+.cart-fab:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(123,63,160,.7)}
+.cart-fab-icon{font-size:1.3rem}
+.cart-fab-total{font-size:.9rem;font-weight:700;color:#f0c875}
+.cart-fab-badge{background:#d4a853;color:#1a0a2e;border-radius:50%;width:20px;height:20px;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;font-family:'Cairo',sans-serif}
+
+/* Cart Drawer */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;left:0;top:0;bottom:0;width:340px;max-width:95vw;background:#1a0a2e;border-right:1px solid #4a2570;z-index:10001;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:'Cairo',sans-serif;direction:rtl}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.2rem 1rem;border-bottom:1px solid #4a2570}
+.cart-head h3{font-size:1.1rem;font-weight:700;color:#f0c875;margin:0}
+.cart-close{background:none;border:none;color:#a090c0;font-size:1.4rem;cursor:pointer;padding:4px;line-height:1}
+.cart-close:hover{color:#f0e8ff}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.cart-empty{text-align:center;color:#a090c0;padding:3rem 1rem;font-size:.95rem}
+.cart-empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+.cart-item{direction:ltr;background:#2d1550;border:1px solid #4a2570;border-radius:10px;padding:.75rem 1rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.cart-item-info{flex:1}
+.cart-item-name{direction:rtl;text-align:right;font-size:.9rem;font-weight:600;color:#f0e8ff;margin-bottom:2px}
+.cart-item-sub{font-size:.75rem;color:#a090c0}
+.cart-item-price{font-size:.9rem;font-weight:700;color:#f0c875;white-space:nowrap}
+.cart-item-qty{display:flex;align-items:center;gap:6px}
+.cq-btn{width:24px;height:24px;border-radius:50%;border:1px solid #4a2570;background:#1f0d3a;color:#f0e8ff;font-size:.9rem;cursor:pointer;line-height:24px;text-align:center;padding:0;transition:all .15s}
+.cq-btn:hover{border-color:#d4a853;color:#d4a853}
+.cq-num{font-size:.85rem;font-weight:700;color:#f0e8ff;min-width:16px;text-align:center}
+.cart-remove{background:none;border:none;color:#6a4a8a;cursor:pointer;font-size:1rem;padding:2px 4px;transition:color .15s}
+.cart-remove:hover{color:#ff6b6b}
+.cart-footer{padding:1rem 1.2rem;border-top:1px solid #4a2570}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.cart-total-label{font-size:1rem;font-weight:600;color:#f0e8ff}
+.cart-total-val{font-size:1.4rem;font-weight:900;color:#f0c875}
+.cart-wa-btn{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;margin-bottom:8px}
+.cart-wa-btn:hover{opacity:.9}
+.cart-wa-btn:disabled{opacity:.4;cursor:not-allowed}
+.cart-clear{width:100%;padding:8px;border-radius:10px;border:1px solid #4a2570;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.cart-clear:hover{border-color:#ff6b6b;color:#ff6b6b}
+
+/* Size picker popup */
+.size-popup{display:none;position:fixed;inset:0;z-index:10002;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}
+.size-popup.show{display:flex}
+.size-popup-box{background:#1f0d3a;border:1.5px solid #4a2570;border-radius:14px;padding:1.5rem;width:280px;font-family:'Cairo',sans-serif;direction:rtl}
+.size-popup-box h4{font-size:1rem;font-weight:700;color:#f0c875;margin-bottom:1rem;text-align:center}
+.size-opts{display:flex;gap:10px;margin-bottom:1.2rem}
+.size-opt{flex:1;padding:10px;border-radius:8px;border:1.5px solid #4a2570;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;text-align:center;white-space:pre-line}
+.size-opt:hover{border-color:#9b5fc0;color:#f0e8ff}
+.size-opt.active{background:#7b3fa0;border-color:#9b5fc0;color:#fff}
+.size-popup-add{width:100%;padding:11px;border-radius:8px;border:none;background:#d4a853;color:#1a0a2e;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.size-popup-add:hover{opacity:.85}
+.size-popup-cancel{width:100%;padding:7px;border-radius:8px;border:none;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer;margin-top:6px}
+
+/* Add button on menu cards */
+.menu-card{position:relative}
+.add-to-cart-btn{width:100%;margin-top:10px;padding:7px;border-radius:8px;border:1.5px solid #7b3fa0;background:transparent;color:#9b5fc0;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.add-to-cart-btn:hover{background:#7b3fa0;color:#fff;border-color:#9b5fc0}
+.add-to-cart-btn.added{background:#25d366;border-color:#25d366;color:#fff}
+</style>
+
+
+<!-- ===== STYLES — حطها في آخر بلوك الـ CSS بتاعك ===== -->
+<style id="cart-styles">
+/* Cart Button */
+.cart-fab{position:fixed;bottom:24px;right:24px;z-index:9999;background:linear-gradient(135deg,#7b3fa0,#9b5fc0);border:none;border-radius:50px;padding:12px 20px;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 4px 20px rgba(123,63,160,.5);transition:transform .2s,box-shadow .2s;font-family:'Cairo',sans-serif;width:fit-content}
+.cart-fab:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(123,63,160,.7)}
+.cart-fab-icon{font-size:1.3rem}
+.cart-fab-total{font-size:.9rem;font-weight:700;color:#f0c875}
+.cart-fab-badge{background:#d4a853;color:#1a0a2e;border-radius:50%;width:20px;height:20px;font-size:.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;font-family:'Cairo',sans-serif}
+
+/* Cart Drawer */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:10000;opacity:0;pointer-events:none;transition:opacity .3s}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-drawer{position:fixed;left:0;top:0;bottom:0;width:340px;max-width:95vw;background:#1a0a2e;border-right:1px solid #4a2570;z-index:10001;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;font-family:'Cairo',sans-serif;direction:rtl}
+.cart-drawer.open{transform:translateX(0)}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.2rem 1rem;border-bottom:1px solid #4a2570}
+.cart-head h3{font-size:1.1rem;font-weight:700;color:#f0c875;margin:0}
+.cart-close{background:none;border:none;color:#a090c0;font-size:1.4rem;cursor:pointer;padding:4px;line-height:1}
+.cart-close:hover{color:#f0e8ff}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.cart-empty{text-align:center;color:#a090c0;padding:3rem 1rem;font-size:.95rem}
+.cart-empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+.cart-item{background:#2d1550;border:1px solid #4a2570;border-radius:10px;padding:.75rem 1rem;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:.9rem;font-weight:600;color:#f0e8ff;margin-bottom:2px}
+.cart-item-sub{font-size:.75rem;color:#a090c0;direction:ltr;text-align:right}
+.cart-item-price{font-size:.9rem;font-weight:700;color:#f0c875;white-space:nowrap}
+.cart-item-qty{display:flex;align-items:center;gap:6px}
+.cq-btn{width:24px;height:24px;border-radius:50%;border:1px solid #4a2570;background:#1f0d3a;color:#f0e8ff;font-size:.9rem;cursor:pointer;line-height:24px;text-align:center;padding:0;transition:all .15s}
+.cq-btn:hover{border-color:#d4a853;color:#d4a853}
+.cq-num{font-size:.85rem;font-weight:700;color:#f0e8ff;min-width:16px;text-align:center}
+.cart-remove{background:none;border:none;color:#6a4a8a;cursor:pointer;font-size:1rem;padding:2px 4px;transition:color .15s}
+.cart-remove:hover{color:#ff6b6b}
+.cart-footer{padding:1rem 1.2rem;border-top:1px solid #4a2570}
+.cart-total-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.cart-total-label{font-size:1rem;font-weight:600;color:#f0e8ff}
+.cart-total-val{font-size:1.4rem;font-weight:900;color:#f0c875}
+.cart-wa-btn{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;margin-bottom:8px}
+.cart-wa-btn:hover{opacity:.9}
+.cart-wa-btn:disabled{opacity:.4;cursor:not-allowed}
+.cart-clear{width:100%;padding:8px;border-radius:10px;border:1px solid #4a2570;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s}
+.cart-clear:hover{border-color:#ff6b6b;color:#ff6b6b}
+
+/* Size picker popup */
+.size-popup{display:none;position:fixed;inset:0;z-index:10002;align-items:center;justify-content:center;background:rgba(0,0,0,.7)}
+.size-popup.show{display:flex}
+.size-popup-box{background:#1f0d3a;border:1.5px solid #4a2570;border-radius:14px;padding:1.5rem;width:280px;font-family:'Cairo',sans-serif;direction:rtl}
+.size-popup-box h4{font-size:1rem;font-weight:700;color:#f0c875;margin-bottom:1rem;text-align:center}
+.size-opts{display:flex;gap:10px;margin-bottom:1.2rem}
+.size-opt{flex:1;padding:10px;border-radius:8px;border:1.5px solid #4a2570;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;text-align:center}
+.size-opt:hover{border-color:#9b5fc0;color:#f0e8ff}
+.size-opt.active{background:#7b3fa0;border-color:#9b5fc0;color:#fff}
+.size-popup-add{width:100%;padding:11px;border-radius:8px;border:none;background:#d4a853;color:#1a0a2e;font-family:'Cairo',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.size-popup-add:hover{opacity:.85}
+.size-popup-cancel{width:100%;padding:7px;border-radius:8px;border:none;background:transparent;color:#a090c0;font-family:'Cairo',sans-serif;font-size:.85rem;cursor:pointer;margin-top:6px}
+
+/* Add button on menu cards */
+.menu-card{position:relative}
+.add-to-cart-btn{width:100%;margin-top:10px;padding:7px;border-radius:8px;border:1.5px solid #7b3fa0;background:transparent;color:#9b5fc0;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
+.add-to-cart-btn:hover{background:#7b3fa0;color:#fff;border-color:#9b5fc0}
+.add-to-cart-btn.added{background:#25d366;border-color:#25d366;color:#fff}
+</style>
+
+
+<!-- ===== MENU SECTION — استبدل الـ section القديمة بيها ===== -->
+<section class="menu-section" id="menu"><div class="container">
+<div class="menu-header reveal"><p class="section-label"><span data-ar>قائمة المشروبات</span><span data-en>Drinks Menu</span></p><h2 class="section-title"><span data-ar>المنيو</span><span data-en>Our Menu</span></h2><p class="section-desc"><span data-ar>مشروبات مصنوعة بحب واحتراف لكل ذوق وكل وقت</span><span data-en>Crafted with love and expertise for every taste, every time</span></p></div>
+<div class="menu-tabs">
+<button class="menu-tab active" onclick="showMenuTab('coffee',this)">☕ <span data-ar>مشروبات القهوة</span><span data-en>Coffee Drinks</span></button>
+<button class="menu-tab" onclick="showMenuTab('blends',this)">🫘 <span data-ar>خلطات فاخرة</span><span data-en>Premium Blends</span></button>
+<button class="menu-tab" onclick="showMenuTab('hot',this)">🍵 <span data-ar>مشروبات ساخنة</span><span data-en>Hot Drinks</span></button>
+<button class="menu-tab" onclick="showMenuTab('other',this)">🥛 <span data-ar>أصناف أخرى</span><span data-en>Other Items</span></button>
+</div>
+
+<div class="menu-grid active" id="tab-coffee">
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>القهوة التركي</span><span data-en>Turkish Coffee</span></span><span class="menu-item-price">15 / 20 EGP</span></div><p class="menu-item-desc"><span data-ar>Single / Double</span><span data-en>Single / Double</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'القهوة التركي',nameEn:'Turkish Coffee',pa:15,pb:20,sizes:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>قهوة محوج</span><span data-en>Spiced Turkish Coffee</span></span><span class="menu-item-price">20 / 25 EGP</span></div><p class="menu-item-desc"><span data-ar>Single / Double</span><span data-en>Single / Double</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'قهوة محوج',nameEn:'Spiced Turkish Coffee',pa:20,pb:25,sizes:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>اسبريسو</span><span data-en>Espresso</span></span><span class="menu-item-price">20 / 25 EGP</span></div><p class="menu-item-desc"><span data-ar>Single / Double</span><span data-en>Single / Double</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'اسبريسو',nameEn:'Espresso',pa:20,pb:25,sizes:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>قهوة فرنساوي</span><span data-en>French Press</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>طعم غني وعميق</span><span data-en>Rich & deep flavor</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'قهوة فرنساوي',nameEn:'French Press',pa:25,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>قهوة بندق</span><span data-en>Hazelnut Coffee</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>نكهة البندق الرائعة</span><span data-en>Wonderful hazelnut flavor</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'قهوة بندق',nameEn:'Hazelnut Coffee',pa:25,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>لاتيه</span><span data-en>Latte</span></span><span class="menu-item-price">30 EGP</span></div><p class="menu-item-desc"><span data-ar>اسبريسو مع حليب مبخر</span><span data-en>Espresso with steamed milk</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'لاتيه',nameEn:'Latte',pa:30,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>كابتشينو</span><span data-en>Cappuccino</span></span><span class="menu-item-price">30 EGP</span></div><p class="menu-item-desc"><span data-ar>كلاسيك لا يُقاوم</span><span data-en>Classic, irresistible taste</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'كابتشينو',nameEn:'Cappuccino',pa:30,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>كورتادو</span><span data-en>Cortado</span></span><span class="menu-item-price">20 EGP</span></div><p class="menu-item-desc"><span data-ar>اسبريسو مع حليب دافئ</span><span data-en>Espresso with warm milk</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'كورتادو',nameEn:'Cortado',pa:20,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>فلات وايت</span><span data-en>Flat White</span></span><span class="menu-item-price">30 EGP</span></div><p class="menu-item-desc"><span data-ar>ناعم وكريمي</span><span data-en>Smooth & creamy</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'فلات وايت',nameEn:'Flat White',pa:30,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>ميكاتو</span><span data-en>Macchiato</span></span><span class="menu-item-price">25 / 30 EGP</span></div><p class="menu-item-desc"><span data-ar>Single / Double</span><span data-en>Single / Double</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'ميكاتو',nameEn:'Macchiato',pa:25,pb:30,sizes:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>أمريكانو</span><span data-en>Americano</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>قهوة أمريكية أصيلة</span><span data-en>Classic American coffee</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'أمريكانو',nameEn:'Americano',pa:25,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>أمريكانو حليب</span><span data-en>White Americano</span></span><span class="menu-item-price">30 EGP</span></div><p class="menu-item-desc"><span data-ar>بإضافة الحليب</span><span data-en>With added milk</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'أمريكانو حليب',nameEn:'White Americano',pa:30,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+</div>
+
+<div class="menu-grid" id="tab-blends">
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>روقان</span><span data-en>Rawqan</span></span><span class="menu-item-price">60 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) خلطة فاخرة</span><span data-en>Premium blend (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'روقان',nameEn:'Rawqan',pa:60,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>مزاج</span><span data-en>Mizaj</span></span><span class="menu-item-price">65 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) خلطة متوسطة</span><span data-en>Medium roast blend (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'مزاج',nameEn:'Mizaj',pa:65,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>مخصوص</span><span data-en>Makhsous</span></span><span class="menu-item-price">70 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) خلطة خاصة</span><span data-en>Special blend (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'مخصوص',nameEn:'Makhsous',pa:70,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>البراوي</span><span data-en>El Brawy</span></span><span class="menu-item-price">80 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) الخلطة الأساسية المميزة</span><span data-en>Our signature blend (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'البراوي',nameEn:'El Brawy',pa:80,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>اسبريسو</span><span data-en>Espresso Blend</span></span><span class="menu-item-price">90 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) خلطة اسبريسو</span><span data-en>Espresso roast blend (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'اسبريسو بلند',nameEn:'Espresso Blend',pa:90,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>البراوي غامق</span><span data-en>El Brawy Dark</span></span><span class="menu-item-price">70 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) تحميص غامق</span><span data-en>Dark roast (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'البراوي غامق',nameEn:'El Brawy Dark',pa:70,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>برازيلي</span><span data-en>Brazilian</span></span><span class="menu-item-price">75 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) بن برازيلي أصيل</span><span data-en>Authentic Brazilian beans (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'برازيلي',nameEn:'Brazilian',pa:75,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>حبشي</span><span data-en>Ethiopian</span></span><span class="menu-item-price">75 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) بن إثيوبي فاخر</span><span data-en>Premium Ethiopian beans (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'حبشي',nameEn:'Ethiopian',pa:75,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>كولومبي</span><span data-en>Colombian</span></span><span class="menu-item-price">120 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) بن كولومبي ممتاز</span><span data-en>Excellent Colombian beans (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'كولومبي',nameEn:'Colombian',pa:120,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>يمني</span><span data-en>Yemeni</span></span><span class="menu-item-price">165 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) البن اليمني الأصيل</span><span data-en>Authentic Yemeni coffee (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'يمني',nameEn:'Yemeni',pa:165,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>هندي أرابيكا</span><span data-en>Indian Arabica</span></span><span class="menu-item-price">110 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) أرابيكا هندية</span><span data-en>Indian Arabica beans (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'هندي أرابيكا',nameEn:'Indian Arabica',pa:110,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>إندونيسي</span><span data-en>Indonesian</span></span><span class="menu-item-price">60 EGP</span></div><p class="menu-item-desc"><span data-ar>(١/٨) بن إندونيسي</span><span data-en>Indonesian beans (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'إندونيسي',nameEn:'Indonesian',pa:60,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+</div>
+
+<div class="menu-grid" id="tab-hot">
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>شاي</span><span data-en>Tea</span></span><span class="menu-item-price">10 EGP</span></div><p class="menu-item-desc"><span data-ar>شاي طازج دافئ</span><span data-en>Fresh warm tea</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'شاي',nameEn:'Tea',pa:10,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>شاي أخضر</span><span data-en>Green Tea</span></span><span class="menu-item-price">10 EGP</span></div><p class="menu-item-desc"><span data-ar>صحي ومنعش</span><span data-en>Healthy & refreshing</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'شاي أخضر',nameEn:'Green Tea',pa:10,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>شاي حليب</span><span data-en>Milk Tea</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>كريمي ودافئ</span><span data-en>Creamy & warm</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'شاي حليب',nameEn:'Milk Tea',pa:25,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>شاي فليغر</span><span data-en>Fliger Tea</span></span><span class="menu-item-price">15 EGP</span></div><p class="menu-item-desc"><span data-ar>بنكهة مميزة</span><span data-en>Distinctive flavor</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'شاي فليغر',nameEn:'Fliger Tea',pa:15,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>يانسون</span><span data-en>Anise</span></span><span class="menu-item-price">10 EGP</span></div><p class="menu-item-desc"><span data-ar>مشروب الأعشاب</span><span data-en>Herbal drink</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'يانسون',nameEn:'Anise',pa:10,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>كوفي ميكس</span><span data-en>Coffee Mix</span></span><span class="menu-item-price">15 EGP</span></div><p class="menu-item-desc"><span data-ar>خليط مميز</span><span data-en>Special blend mix</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'كوفي ميكس',nameEn:'Coffee Mix',pa:15,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>كوفي ميكس حليب</span><span data-en>Coffee Mix Milk</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>بإضافة الحليب</span><span data-en>With added milk</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'كوفي ميكس حليب',nameEn:'Coffee Mix Milk',pa:25,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>سحلب</span><span data-en>Sahlab</span></span><span class="menu-item-price">20 EGP</span></div><p class="menu-item-desc"><span data-ar>مشروب شتوي دافئ</span><span data-en>Warm winter drink</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'سحلب',nameEn:'Sahlab',pa:20,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>سحلب مكسرات</span><span data-en>Sahlab with Nuts</span></span><span class="menu-item-price">35 EGP</span></div><p class="menu-item-desc"><span data-ar>بإضافة المكسرات</span><span data-en>With mixed nuts</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'سحلب مكسرات',nameEn:'Sahlab with Nuts',pa:35,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+</div>
+
+<div class="menu-grid" id="tab-other">
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>نسكافيه بلاك</span><span data-en>Nescafé Black</span></span><span class="menu-item-price">120 EGP</span></div><p class="menu-item-desc"><span data-ar>نسكافيه دارك فاخر (١/٨)</span><span data-en>Premium black Nescafé (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'نسكافيه بلاك',nameEn:'Nescafé Black',pa:120,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>نسكافيه جولد</span><span data-en>Nescafé Gold</span></span><span class="menu-item-price">150 EGP</span></div><p class="menu-item-desc"><span data-ar>نسكافيه جولد (١/٨)</span><span data-en>Gold Nescafé (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'نسكافيه جولد',nameEn:'Nescafé Gold',pa:150,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>سحلب بودرة</span><span data-en>Sahlab Powder</span></span><span class="menu-item-price">25 EGP</span></div><p class="menu-item-desc"><span data-ar>سحلب بودرة (١/٨)</span><span data-en>Powder sahlab (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'سحلب بودرة',nameEn:'Sahlab Powder',pa:25,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>نسكافيه ١×٣</span><span data-en>Nescafé 1×3</span></span><span class="menu-item-price">60 EGP</span></div><p class="menu-item-desc"><span data-ar>مزيج النسكافيه (١/٨)</span><span data-en>Nescafé blend mix (1/8)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'نسكافيه ١×٣',nameEn:'Nescafé 1×3',pa:60,sizes:false,weight:true},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+<div class="menu-card"><div class="menu-card-header"><span class="menu-item-name"><span data-ar>إضافة تحويجة</span><span data-en>Spice Add-on</span></span><span class="menu-item-price">+5 EGP</span></div><p class="menu-item-desc"><span data-ar>إضافة لأي مشروب أو بن (كل الأحجام)</span><span data-en>Add to any drink or raw coffee (Any sizes)</span></p><button class="add-to-cart-btn" onclick="cartAdd({name:'إضافة تحويجة',nameEn:'Spice Add-on',pa:5,sizes:false},this)">🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button></div>
+</div>
+</div></section>
+
+
+<!-- ===== CART UI ===== -->
+<div class="cart-overlay" id="cartOverlay" onclick="cartClose()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>🛒 <span data-ar>سلة المشتريات</span><span data-en>Your Cart</span></h3>
+    <button class="cart-close" onclick="cartClose()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty"><div class="cart-empty-icon">🛒</div><span data-ar>السلة فاضية</span><span data-en>Your cart is empty</span></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <span class="cart-total-label"><span data-ar>الإجمالي</span><span data-en>Total</span></span>
+      <span class="cart-total-val" id="cartTotal">0 EGP</span>
+    </div>
+    <button class="cart-wa-btn" id="cartWaBtn" onclick="cartSendWA()" disabled>
+      📲 <span data-ar>اطلب على واتساب</span><span data-en>Order via WhatsApp</span>
+    </button>
+    <button class="cart-clear" onclick="cartClearAll()"><span data-ar>إفراغ السلة</span><span data-en>Clear Cart</span></button>
+  </div>
+</div>
+
+<!-- Floating Cart Button -->
+<button class="cart-fab" id="cartFab" onclick="cartOpen()">
+  <span class="cart-fab-icon">🛒</span>
+  <span class="cart-fab-total" id="fabTotal">0 EGP</span>
+  <span class="cart-fab-badge" id="fabBadge">0</span>
+</button>
+
+<!-- Weight Picker Popup -->
+<div class="size-popup" id="weightPopup">
+  <div class="size-popup-box">
+    <h4 id="weightPopupTitle">اختار الكمية</h4>
+    <div class="size-opts">
+      <button class="size-opt active" id="weightOptA" onclick="weightPickerSelect('eighth')"></button>
+      <button class="size-opt" id="weightOptB" onclick="weightPickerSelect('quarter')"></button>
+    </div>
+    <button class="size-popup-add" onclick="weightPickerConfirm()"><span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button>
+    <button class="size-popup-cancel" onclick="weightPickerCancel()"><span data-ar>إلغاء</span><span data-en>Cancel</span></button>
+  </div>
+</div>
+
+<!-- Size Picker Popup -->
+<div class="size-popup" id="sizePopup">
+  <div class="size-popup-box">
+    <h4 id="sizePopupTitle">اختار الحجم</h4>
+    <div class="size-opts">
+      <button class="size-opt active" id="sizeOptA" onclick="sizePickerSelect('single')"></button>
+      <button class="size-opt" id="sizeOptB" onclick="sizePickerSelect('double')"></button>
+    </div>
+    <button class="size-popup-add" onclick="sizePickerConfirm()"><span data-ar>أضف للسلة</span><span data-en>Add to Cart</span></button>
+    <button class="size-popup-cancel" onclick="sizePickerCancel()"><span data-ar>إلغاء</span><span data-en>Cancel</span></button>
+  </div>
+</div>
+
+
+<!-- ===== CART SCRIPT — حطه قبل </script> في موقعك ===== -->
+<script id="cart-script">
+(function(){
+  const WA = '201002411155';
+  let cart = [];
+  let pendingItem = null;
+  let pendingBtn = null;
+  let pickerSize = 'single';
+
+  let pendingWeight = 'eighth';
+
+  // ── Weight picker (١/٨ vs ربع) ──
+  window.weightPickerSelect = function(w){
+    pendingWeight = w;
+    document.getElementById('weightOptA').classList.toggle('active', w==='eighth');
+    document.getElementById('weightOptB').classList.toggle('active', w==='quarter');
+  };
+
+  window.weightPickerConfirm = function(){
+    if(!pendingItem) return;
+    const isQuarter = pendingWeight === 'quarter';
+    const price = isQuarter ? pendingItem.pa * 2 : pendingItem.pa;
+    const suffix = isQuarter ? ' (ربع)' : ' (١/٨)';
+    const suffixEn = isQuarter ? ' (1/4)' : ' (1/8)';
+    addItem(pendingItem.name + suffix, pendingItem.nameEn + suffixEn, price, null, pendingBtn);
+    weightPickerCancel();
+  };
+
+  window.weightPickerCancel = function(){
+    document.getElementById('weightPopup').classList.remove('show');
+    pendingItem = null; pendingBtn = null;
+  };
+
+  // ── Add to cart ──
+  window.cartAdd = function(item, btn){
+    if(item.weight){
+      pendingItem = item;
+      pendingBtn = btn;
+      pendingWeight = 'eighth';
+      const isAr = document.documentElement.lang !== 'en';
+      document.getElementById('weightPopupTitle').textContent = isAr ? ('اختار الكمية — ' + item.name) : ('Choose amount: ' + item.nameEn);
+     document.getElementById('weightOptA').textContent = (isAr ? 'ثمن (١/٨)\n' : 'kg 1/8 \n') + item.pa + ' EGP';
+document.getElementById('weightOptB').textContent = (isAr ? 'ربع (١/٤)\n' : '1/4 kg\n') + (item.pa * 2) + ' EGP';
+      document.getElementById('weightOptA').classList.add('active');
+      document.getElementById('weightOptB').classList.remove('active');
+      document.getElementById('weightPopup').classList.add('show');
+    } else if(item.sizes){
+      pendingItem = item;
+      pendingBtn = btn;
+      pickerSize = 'single';
+      const isAr = document.documentElement.lang !== 'en';
+      document.getElementById('sizePopupTitle').textContent = isAr ? ('اختار حجم ' + item.name) : ('Choose size: ' + item.nameEn);
+document.getElementById('sizeOptA').textContent = 'Single\n' + item.pa + ' EGP';
+document.getElementById('sizeOptB').textContent = 'Double\n' + item.pb + ' EGP';
+      document.getElementById('sizeOptA').classList.add('active');
+      document.getElementById('sizeOptB').classList.remove('active');
+      document.getElementById('sizePopup').classList.add('show');
+    } else {
+      addItem(item.name, item.nameEn, item.pa, null, btn);
+    }
+  };
+
+  window.sizePickerSelect = function(s){
+    pickerSize = s;
+    document.getElementById('sizeOptA').classList.toggle('active', s==='single');
+    document.getElementById('sizeOptB').classList.toggle('active', s==='double');
+  };
+
+  window.sizePickerConfirm = function(){
+    if(!pendingItem) return;
+    const price = pickerSize==='double' ? pendingItem.pb : pendingItem.pa;
+    const sizeSuffix = pickerSize==='double' ? ' (Double)' : ' (Single)';
+    addItem(pendingItem.name+sizeSuffix, pendingItem.nameEn+sizeSuffix, price, null, pendingBtn);
+    sizePickerCancel();
+  };
+
+  window.sizePickerCancel = function(){
+    document.getElementById('sizePopup').classList.remove('show');
+    pendingItem=null; pendingBtn=null;
+  };
+
+  function addItem(name, nameEn, price, qty, btn){
+    const key = name;
+    const ex = cart.find(i=>i.key===key);
+    if(ex){ ex.qty++; }
+    else { cart.push({key,name,nameEn,price,qty:qty||1}); }
+    renderCart();
+    flashBtn(btn);
+  }
+
+  function flashBtn(btn){
+    if(!btn) return;
+    btn.classList.add('added');
+    btn.innerHTML = '✅ <span data-ar>تمت الإضافة</span><span data-en>Added!</span>';
+    setTimeout(()=>{
+      btn.classList.remove('added');
+      btn.innerHTML = '🛒 <span data-ar>أضف للسلة</span><span data-en>Add to Cart</span>';
+    }, 1500);
+  }
+
+  // ── Qty controls ──
+  window.cartQtyChange = function(key, d){
+    const item = cart.find(i=>i.key===key);
+    if(!item) return;
+    item.qty = Math.max(1, item.qty+d);
+    renderCart();
+  };
+
+  window.cartRemove = function(key){
+    cart = cart.filter(i=>i.key!==key);
+    renderCart();
+  };
+
+  window.cartClearAll = function(){
+    cart=[];
+    renderCart();
+    cartClose();
+  };
+
+  // ── Render ──
+  function renderCart(){
+    const box = document.getElementById('cartItems');
+    const total = cart.reduce((s,i)=>s+i.price*i.qty, 0);
+    const count = cart.reduce((s,i)=>s+i.qty, 0);
+
+    document.getElementById('cartTotal').textContent = total.toLocaleString('en-US') + ' EGP';
+    document.getElementById('fabTotal').textContent = total.toLocaleString('en-US') + ' EGP';
+      document.getElementById('fabBadge').textContent = count;
+      document.getElementById('cartWaBtn').disabled = cart.length===0;
+     if(typeof applyLang === 'function') applyLang();
+      if(cart.length===0){
+      box.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon">🛒</div><span data-ar>السلة فاضية</span><span data-en>Your cart is empty</span></div>';
+      return;
+    }
+  
+    box.innerHTML = cart.map(item=>`
+      <div class="cart-item">
+        <div class="cart-item-info">
+      <div class="cart-item-name">${document.documentElement.lang === 'en' ? item.nameEn : item.name}</div>
+         <div class="cart-item-sub">${item.qty} x ${item.price} EGP</div>
+        </div>
+        <div class="cart-item-qty">
+          <button class="cq-btn" onclick="cartQtyChange('${item.key}',-1)">−</button>
+          <span class="cq-num">${item.qty}</span>
+          <button class="cq-btn" onclick="cartQtyChange('${item.key}',1)">+</button>
+        </div>
+        <span class="cart-item-price">${(item.price*item.qty).toLocaleString('en-US')} EGP</span>
+        <button class="cart-remove" onclick="cartRemove('${item.key}')">🗑</button>
+      </div>
+      
+    `).join('');
+
+    // re-apply lang
+    if(typeof applyLang === 'function') applyLang();
+  }
+
+  // ── WhatsApp ──
+  window.cartSendWA = function(){
+    if(cart.length===0) return;
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    let msg = 'السلام عليكم، عايز أطلب:\n\n';
+    cart.forEach(i=>{ msg += `• ${i.name} × ${i.qty} = ${i.price*i.qty} EGP\n`; });
+    msg += `\n💰 الإجمالي: ${total} EGP\n\nشكراً 🙏`;
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');
+  };
+
+  // ── Open/Close ──
+  window.cartOpen = function(){
+    document.getElementById('cartDrawer').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+  };
+  window.cartClose = function(){
+    document.getElementById('cartDrawer').classList.remove('open');
+    document.getElementById('cartOverlay').classList.remove('open');
+  };
+})();
+</script>
+
+</script>
+
+</div></section>
+<section class="menu-img-section"><div class="container"><div class="menu-header reveal" style="margin-bottom:38px"><p class="section-label"><span data-ar>منيو كامل</span><span data-en>Full Menu</span></p><h2 class="section-title"><span data-ar>قائمة الأسعار</span><span data-en>Price List</span></h2></div>
+<img src="img/86ec4e2daf.webp" class="menu-full-img reveal" alt="El Brawy Menu">
+</div></section>
+<section class="gallery-section" id="gallery"><div class="container"><div class="gallery-header reveal"><p class="section-label"><span data-ar>معرض الصور</span><span data-en>Gallery</span></p><h2 class="section-title"><span data-ar>من داخل البراوي</span><span data-en>Inside El Brawy</span></h2></div><div class="gallery-grid">
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/40cb3f8919.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/2b735bc581.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/ba64ff90d5.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/af2b465024.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/aadc854c3f.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/59e342f3fd.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/9be05ab9d1.webp" alt="El Brawy"></div>
+<div class="gallery-item"><img loading="lazy" decoding="async" src="img/8e62d22dd6.webp" alt="El Brawy"></div>
+</div></div></section>
+<section class="contact-section" id="contact"><div class="container"><div class="reveal" style="margin-bottom:55px"><p class="section-label"><span data-ar>تواصل معنا</span><span data-en>Get In Touch</span></p><h2 class="section-title"><span data-ar>نحن هنا لخدمتك</span><span data-en>We're Here For You</span></h2></div><div class="contact-grid"><div class="reveal"><div class="contact-info-card">
+<div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label"><span data-ar>العنوان</span><span data-en>Location</span></div><div class="contact-value"><a href="https://maps.app.goo.gl/6pd3rj5CDDswjVwU7" target="_blank"><span data-ar>الإسكندرية، مصر</span><span data-en>Alexandria, Egypt</span><br><span style="color:var(--gold-light);font-size:13px"><span data-ar>اضغط لعرض على الخريطة</span><span data-en>Tap to view on map →</span></span></a></div></div></div>
+<div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">WhatsApp</div><div class="contact-value"><a href="https://wa.me/201002411155">01002411155</a></div></div></div>
+<div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-label"><span data-ar>ساعات العمل</span><span data-en>Working Hours</span></div><div class="contact-value"><span data-ar> يوميًا من 6 صباحًا حتى 1 منتصف الليل</span><span data-en>Daily, morning until midnight</span></div></div></div>
+</div>
+</div><div class="reveal"><div class="map-container"><iframe src="https://maps.google.com/maps?q=%D8%A8%D9%86+%D8%A7%D9%84%D8%A8%D8%B1%D8%A7%D9%88%D9%8A+%D8%A7%D9%84%D8%A7%D8%B3%D9%83%D9%86%D8%AF%D8%B1%D9%8A%D8%A9&output=embed&z=15" allowfullscreen loading="lazy"></iframe></div>
+<a href="https://wa.me/201002411155" target="_blank" class="btn-primary" style="display:block;text-align:center;margin-top:18px"><span data-ar>💬 راسلنا على واتساب</span><span data-en>💬 Message Us on WhatsApp</span></a>
+</div></div></div></section>
+<footer><div class="container"><img loading="lazy" src="img/7cce533f7e.webp" class="footer-logo" alt="El Brawy">
+<div class="footer-name"><span data-ar>بن البراوي</span><span data-en>El Brawy Coffee</span></div>
+<div class="footer-tagline"><span data-ar>قهوة متخصصة | الإسكندرية، مصر</span><span data-en>Specialty Coffee | Alexandria, Egypt</span></div>
+<div class="social-links" style="justify-content:center">
+  <a href="https://www.facebook.com/share/1C2i61XhTg/" target="_blank" class="social-link">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:#1877F2">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+  </a>
+  <a href="https://www.instagram.com/elbrawy_coffee" target="_blank" class="social-link">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px">
+      <defs>
+        <linearGradient id="insta-grad-footer" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#feda75;stop-opacity:1" />
+          <stop offset="5%" style="stop-color:#fa7e1e;stop-opacity:1" />
+          <stop offset="45%" style="stop-color:#d92e7f;stop-opacity:1" />
+          <stop offset="60%" style="stop-color:#9b36b7;stop-opacity:1" />
+          <stop offset="90%" style="stop-color:#515bd4;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect fill="url(#insta-grad-footer)" x="2" y="2" width="20" height="20" rx="5"/>
+      <circle cx="12" cy="12" r="5.5" fill="none" stroke="white" stroke-width="1.5"/>
+      <circle cx="17" cy="7" r="1" fill="white"/>
+    </svg>
+  </a>
+  <a href="https://www.tiktok.com/@elbrawy_coffee" target="_blank" class="social-link">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px">
+      <defs>
+        <linearGradient id="tiktok-grad-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#00f7ef;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#ff0050;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#tiktok-grad-footer)" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.66 1.94 2.889 2.889 0 0 1 5.66-1.94V9.75a6.19 6.19 0 0 0-5.66 5.92 6.19 6.19 0 1 0 12.38-1.55A6.73 6.73 0 0 1 19.59 6.69z"/>
+    </svg>
+  </a>
+  <a href="https://wa.me/201002411155" target="_blank" class="social-link">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:#25D366">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.535 4.134 1.456 5.888L.464 23.536l5.783-1.518C8.866 23.464 10.388 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.38 0-2.74-.381-3.927-1.1l-.282-.168-2.921.767.784-2.86-.175-.28C2.378 16.602 1.818 14.369 1.818 12c0-5.464 4.455-9.909 9.91-9.909 5.454 0 9.909 4.455 9.909 9.91 0 5.454-4.455 9.909-9.91 9.909zm5.4-7.425c-.296-.148-1.75-.866-2.021-.966-.272-.099-.47-.148-.67.149-.199.297-.77.966-.944 1.164-.174.199-.347.223-.645.075-.297-.148-1.255-.462-2.39-1.475-.884-.788-1.48-1.76-1.654-2.059-.174-.297-.018-.458.13-.607.134-.133.298-.347.446-.52.15-.174.199-.298.299-.497.099-.198.05-.371-.025-.52-.074-.149-.67-1.612-.917-2.207-.242-.579-.486-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.148.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+    </svg>
+  </a>
+</div>
+<div class="footer-divider"></div><div class="footer-bottom"><span data-ar>© 2026 بن البراوي — جميع الحقوق محفوظة</span><span data-en>© 2026 El Brawy Coffee — All Rights Reserved</span></div></div></footer>
+<a onclick="toggleCommModal()" class="whatsapp-float" style="cursor:pointer;display:flex;align-items:center;justify-content:center;">📞</a>
+<div class="comm-modal" id="commModal">
+  <div class="comm-modal-content">
+    <button class="comm-modal-close" onclick="toggleCommModal()">✕</button>
+    <h3 class="comm-modal-title"><span data-ar>تواصل معنا</span><span data-en>Contact Us</span></h3>
+    <div class="comm-links-grid">
+      <a href="https://wa.me/201002411155" target="_blank" class="comm-link-card">
+        <svg class="comm-link-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#25D366" d="M12 0C5.373 0 0 5.373 0 12c0 2.129.535 4.134 1.456 5.888L.464 23.536l5.783-1.518C8.866 23.464 10.388 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.38 0-2.74-.381-3.927-1.1l-.282-.168-2.921.767.784-2.86-.175-.28C2.378 16.602 1.818 14.369 1.818 12c0-5.464 4.455-9.909 9.91-9.909 5.454 0 9.909 4.455 9.909 9.91 0 5.454-4.455 9.909-9.91 9.909zm5.4-7.425c-.296-.148-1.75-.866-2.021-.966-.272-.099-.47-.148-.67.149-.199.297-.77.966-.944 1.164-.174.199-.347.223-.645.075-.297-.148-1.255-.462-2.39-1.475-.884-.788-1.48-1.76-1.654-2.059-.174-.297-.018-.458.13-.607.134-.133.298-.347.446-.52.15-.174.199-.298.299-.497.099-.198.05-.371-.025-.52-.074-.149-.67-1.612-.917-2.207-.242-.579-.486-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.148.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+        </svg>
+        <span class="comm-link-name"><span data-ar>واتساب</span><span data-en>WhatsApp</span></span>
+      </a>
+      <a href="https://www.instagram.com/elbrawy_coffee" target="_blank" class="comm-link-card">
+        <svg class="comm-link-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="insta-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#feda75;stop-opacity:1" />
+              <stop offset="5%" style="stop-color:#fa7e1e;stop-opacity:1" />
+              <stop offset="45%" style="stop-color:#d92e7f;stop-opacity:1" />
+              <stop offset="60%" style="stop-color:#9b36b7;stop-opacity:1" />
+              <stop offset="90%" style="stop-color:#515bd4;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <rect fill="url(#insta-grad)" x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4" fill="white" opacity="0"/>
+          <circle cx="12" cy="12" r="5.5" fill="none" stroke="white" stroke-width="1.5"/>
+          <circle cx="17" cy="7" r="1" fill="white"/>
+          <path d="M 12 7 A 5 5 0 0 1 17 12 A 5 5 0 0 1 12 17 A 5 5 0 0 1 7 12 A 5 5 0 0 1 12 7" fill="none" stroke="white" stroke-width="1.5"/>
+        </svg>
+        <span class="comm-link-name"><span data-ar>إنستجرام</span><span data-en>Instagram</span></span>
+      </a>
+      <a href="https://www.facebook.com/share/1C2i61XhTg/" target="_blank" class="comm-link-card">
+        <svg class="comm-link-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill="#1877F2" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        <span class="comm-link-name"><span data-ar>فيسبوك</span><span data-en>Facebook</span></span>
+      </a>
+      <a href="https://www.tiktok.com/@elbrawy_coffee" target="_blank" class="comm-link-card">
+        <svg class="comm-link-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tiktok-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#00f7ef;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ff0050;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path fill="url(#tiktok-grad)" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.66 1.94 2.889 2.889 0 0 1 5.66-1.94V9.75a6.19 6.19 0 0 0-5.66 5.92 6.19 6.19 0 1 0 12.38-1.55A6.73 6.73 0 0 1 19.59 6.69z"/>
+        </svg>
+        <span class="comm-link-name"><span data-ar>تيك توك</span><span data-en>TikTok</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+function setLang(lang){
+  const body=document.body,html=document.getElementById('html-root');
+  const btns=document.querySelectorAll('.lang-btn');
+  if(lang==='en'){
+    body.classList.add('en');html.setAttribute('lang','en');html.setAttribute('dir','ltr');
+    btns[0].classList.remove('active');btns[1].classList.add('active');
+    localStorage.setItem('lang','en');
+  } else {
+    body.classList.remove('en');html.setAttribute('lang','ar');html.setAttribute('dir','rtl');
+    btns[0].classList.add('active');btns[1].classList.remove('active');
+    localStorage.setItem('lang','ar');
+  }
+}
+const savedLang=localStorage.getItem('lang');
+if(savedLang==='en') setLang('en');
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+});
+
+let slide=0;const slides=document.querySelectorAll('.hero-slide');
+setInterval(()=>{slides[slide].classList.remove('active');slide=(slide+1)%slides.length;slides[slide].classList.add('active');},5000);
+
+function showMenuTab(tab,btn){
+  document.querySelectorAll('.menu-grid').forEach(g=>g.classList.remove('active'));
+  document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+function toggleMenu(){
+  const links=document.querySelector('.nav-links');
+  const isOpen=links.style.display==='flex';
+  links.style.cssText=isOpen?'display:none':'display:flex;flex-direction:column;position:fixed;top:75px;right:0;left:0;background:rgba(26,10,46,0.98);padding:28px;gap:18px;backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,0.15);z-index:999';
+}
+
+function toggleCommModal(){
+  const modal=document.getElementById('commModal');
+  modal.classList.toggle('active');
+}
+
+
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  });
+}
+</script>
+</body>
+</html>
